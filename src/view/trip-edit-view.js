@@ -147,7 +147,7 @@ const createEditFormTemplate = () => ` <form class="event event--edit" action="#
               </form>`;
 
 
-export default class EditForm {
+export default class TripEditView {
   getTemplate() {
     return createEditFormTemplate();
   }

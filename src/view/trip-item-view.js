@@ -39,7 +39,7 @@ const createTripItemTemplate = () => ` <li class="trip-events__item">
             </li>`;
 
 
-export default class TripItem {
+export default class TripItemView {
   getTemplate() {
     return createTripItemTemplate();
   }
