@@ -30,5 +30,9 @@ function getTimeDifference(firstDate, secondDate) {
   return difference.format(format).replace(/\b00D 00H\b/, '').replace(/\b00D\b/, '');
 }
 
+function capitalizeWord(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
-export { getRandomArrayElement, humanizePointDate, humanizePointTime, getTimeDifference, humanizeDateTime };
+
+export { getRandomArrayElement, humanizePointDate, humanizePointTime, getTimeDifference, humanizeDateTime, capitalizeWord };

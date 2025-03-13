@@ -1,8 +1,9 @@
 import { createElement } from '../render';
-import { humanizeDateTime } from '../utils';
+import { humanizeDateTime, capitalizeWord } from '../utils';
+import { EVENT_TYPES } from '../consts';
+
 
 function createEditFormTemplate(point, currentDestination, offers, destination) {
-
   const { id, type, basePrice, dateFrom, dateTo} = point;
 
   const createDestinationTemplate = () => destination.map((el) => `<option value="${el.name}"></option>`).join('');
@@ -10,7 +11,6 @@ function createEditFormTemplate(point, currentDestination, offers, destination) 
   const createOfferTemplate = () =>
     (offers?.offers?.length ? offers.offers.map((offer) => {
       const isChecked = point.offers.includes(offer.id) ? 'checked' : '';
-
       return `<div class="event__offer-selector">
                 <input class="event__offer-checkbox visually-hidden" id="event-offer-${offer.title}-${offer.id}"
                        type="checkbox" name="event-offer-${offer.id}" ${isChecked}>
@@ -21,6 +21,16 @@ function createEditFormTemplate(point, currentDestination, offers, destination) 
                 </label>
               </div>`;
     }).join('') : '');
+
+  const createTypesTemplate = () => EVENT_TYPES.map((el) => {
+    const isChecked = el === type ? 'checked' : '';
+    return `<div class="event__type-item">
+          <input id="event-type-${el}-${id}" class="event__type-input visually-hidden" type="radio" name="event-type" value="${el}" ${isChecked}>
+          <label class="event__type-label event__type-label--${el}" for="event-type-${el}-${id}">${capitalizeWord(el)}</label>
+      </div>`;
+  }).join('');
+
+  const createImageTemplate = () => currentDestination.pictures.map((el) => `<img class="event__photo" src="${el.src}" alt="${el.description}">`).join('');
 
   return (
     ` <form class="event event--edit" action="#" method="post">
@@ -35,51 +45,7 @@ function createEditFormTemplate(point, currentDestination, offers, destination) 
                     <div class="event__type-list">
                       <fieldset class="event__type-group">
                         <legend class="visually-hidden">Event type</legend>
-
-                        <div class="event__type-item">
-                          <input id="event-type-taxi-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="taxi">
-                          <label class="event__type-label  event__type-label--taxi" for="event-type-taxi-${id}">Taxi</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-bus-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus">
-                          <label class="event__type-label  event__type-label--bus" for="event-type-bus-${id}">Bus</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-train-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train">
-                          <label class="event__type-label  event__type-label--train" for="event-type-train-${id}">Train</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-ship-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship">
-                          <label class="event__type-label  event__type-label--ship" for="event-type-ship-${id}">Ship</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-drive-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive">
-                          <label class="event__type-label  event__type-label--drive" for="event-type-drive-${id}">Drive</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-flight-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" checked>
-                          <label class="event__type-label  event__type-label--flight" for="event-type-flight-${id}">Flight</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-check-in-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in">
-                          <label class="event__type-label  event__type-label--check-in" for="event-type-check-in-${id}">Check-in</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-sightseeing-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing">
-                          <label class="event__type-label  event__type-label--sightseeing" for="event-type-sightseeing-${id}">Sightseeing</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-restaurant-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant">
-                          <label class="event__type-label  event__type-label--restaurant" for="event-type-restaurant-${id}">Restaurant</label>
-                        </div>
+                        ${createTypesTemplate()}
                       </fieldset>
                     </div>
                   </div>
@@ -123,6 +89,11 @@ function createEditFormTemplate(point, currentDestination, offers, destination) 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
                     <p class="event__destination-description">${currentDestination.description}</p>
+                     <div class="event__photos-container">
+                      <div class="event__photos-tape">
+                        ${createImageTemplate()}
+                      </div>
+                    </div>
                   </section>
                 </section>
               </form>`

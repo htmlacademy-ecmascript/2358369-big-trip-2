@@ -28,7 +28,8 @@ export default class Presenter {
       point: this.points[0],
       currentDestination: this.destinationsModel.getDestinationById(this.points[0].destination),
       offers: this.offersModel.getOffersByType(this.points[0].type),
-      destinations: this.destinations
+      destinations: this.destinations,
+      // images: this.destinationsModel.getDestinationById(this.points[0].destination)
     }), this.tripListComponent.getElement());
 
     for (let i = 1; i < 4; i++) {
