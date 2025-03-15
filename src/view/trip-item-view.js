@@ -1,3 +1,4 @@
+import AbstractView from '../framework/view/abstract-view';
 import { createElement } from '../render';
 import { humanizePointDate, humanizePointTime, getTimeDifference } from '../utils';
 
@@ -51,16 +52,25 @@ function createTripItemTemplate(point, offers, destination) {
 }
 
 
-export default class TripItemView {
+export default class TripItemView extends AbstractView {
+  #point = null;
+  #offers = null;
+  #destinations = null;
+  #handleEditClick = null;
 
-  constructor({ point, offers, destinations }) {
-    this.point = point;
-    this.offers = offers;
-    this.destinations = destinations;
+  constructor({ point, offers, destinations, onEditClick }) {
+    super();
+    this.#point = point;
+    this.#offers = offers;
+    this.#destinations = destinations;
+    this.#handleEditClick = onEditClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#editClickHandler);
   }
 
-  getTemplate() {
-    return createTripItemTemplate(this.point, this.offers, this.destinations);
+  get template() {
+    return createTripItemTemplate(this.#point, this.#offers, this.#destinations);
   }
 
   getElement() {
@@ -74,5 +84,10 @@ export default class TripItemView {
   removeElement() {
     this.element = null;
   }
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleEditClick();
+  };
 }
 
