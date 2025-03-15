@@ -1,4 +1,4 @@
-import { render } from './render';
+import { render } from './framework/render';
 import Filters from './view/filters-view';
 import Presenter from './presenter/presenter';
 import OffersModel from './model/offers-model';

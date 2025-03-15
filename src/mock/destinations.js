@@ -5,23 +5,23 @@ export const mockDestinations = [
     name: 'Chamonix',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -32,23 +32,23 @@ export const mockDestinations = [
     name: 'Tokyo',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -59,23 +59,23 @@ export const mockDestinations = [
     name: 'Berlin',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -86,23 +86,23 @@ export const mockDestinations = [
     name: 'Milan',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -113,23 +113,23 @@ export const mockDestinations = [
     name: 'Bern',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -140,23 +140,23 @@ export const mockDestinations = [
     name: 'Seoul',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
@@ -167,23 +167,23 @@ export const mockDestinations = [
     name: 'Belgrade',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://dummyimage.com/400x300/000/fff&text=Hello',
         description: 'Chamonix parliament building'
       }
     ]
