@@ -2,7 +2,7 @@ import TripListView from '../view/trip-list-view';
 import TripItemView from '../view/trip-item-view';
 import SortingView from '../view/sorting-view';
 import TripEditView from '../view/trip-edit-view';
-
+import EmptyListView from '../view/empty-list-view';
 import { render, replace } from '../framework/render';
 
 
@@ -10,6 +10,7 @@ export default class Presenter {
   #tripListComponent = new TripListView();
   #sortingComponent = new SortingView();
   #mainContainer = null;
+  #headerContainer = null;
   #pointsModel = null;
   #offersModel = null;
   #destinationsModel = null;
@@ -18,26 +19,55 @@ export default class Presenter {
   #offers = [];
   #destinations = [];
 
-  constructor({mainContainer, pointsModel, offersModel, destinationsModel}) {
+  constructor({ mainContainer, headerContainer, pointsModel, offersModel, destinationsModel }) {
     this.#mainContainer = mainContainer;
+    this.#headerContainer = headerContainer;
     this.#pointsModel = pointsModel;
     this.#offersModel = offersModel;
     this.#destinationsModel = destinationsModel;
   }
 
   init() {
+    this.#renderBoard();
+  }
+
+  #renderBoard() {
     this.#points = [...this.#pointsModel.points];
     this.#offers = [...this.#offersModel.offers];
     this.#destinations = [...this.#destinationsModel.destinations];
-    render(this.#sortingComponent, this.#mainContainer);
-    render(this.#tripListComponent, this.#mainContainer);
 
-    for (let i = 0; i < 7; i++) {
-      this.#renderTripItem(this.#points[i]);
+    if (this.#points.length === 0) {
+      render(new EmptyListView(), this.#mainContainer);
+      return;
     }
+
+    // render(new FiltersView(this.#handleFilterChange.bind(this)), this.#headerContainer);
+    render(this.#sortingComponent, this.#mainContainer);
+    this.#renderPointsList();
+    this.#renderPoints(this.#points);
   }
 
-  #renderTripItem(point) {
+  #clearBoard() {
+    this.#tripListComponent.element.innerHTML = '';
+  }
+
+  #renderPoints(points) {
+    points.forEach((point) => this.#renderPoint(point));
+  }
+
+  #renderPointsList() {
+    render(this.#tripListComponent, this.#mainContainer);
+  }
+
+  // #handleFilterChange(evt) {
+  //   this.#currentFilter = evt.target.value;
+  //   this.#clearBoard();
+
+  //   const filteredPoints = filter[this.#currentFilter](this.#pointsModel.points);
+  //   this.#renderPoints(filteredPoints);
+  // }
+
+  #renderPoint(point) {
     const destination = this.#destinationsModel.getDestinationById(point.destination);
     const offers = this.#offersModel.getOffersByType(point.type);
 
@@ -75,9 +105,10 @@ export default class Presenter {
     }
 
     function onEscKeypress(evt) {
-      evt.preventDefault();
-      replaceFormToPoint();
-      document.removeEventListener('keydown', onEscKeypress);
+      if (evt.key === 'Escape') {
+        replaceFormToPoint();
+        document.removeEventListener('keydown', onEscKeypress);
+      }
     }
 
     render(pointComponent, this.#tripListComponent.element);
