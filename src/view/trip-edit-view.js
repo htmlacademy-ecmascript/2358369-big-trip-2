@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view';
 // import { createElement } from '../render';
-import { humanizeDateTime, capitalizeWord } from '../utils';
+import { humanizeDateTime } from '../utils/date';
+import { capitalizeWord } from '../utils/common';
 import { EVENT_TYPES } from '../consts';
 
 
@@ -79,7 +80,7 @@ function createEditFormTemplate(point, currentDestination, offers, destination) 
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-                  <button class="event__reset-btn" type="reset">Cancel</button>
+                  <button class="event__reset-btn" type="reset">Delete</button>
                   <button class="event__rollup-btn" type="button">
                     <span class="visually-hidden">Open event</span>
                   </button>
