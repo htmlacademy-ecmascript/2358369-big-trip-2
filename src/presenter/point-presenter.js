@@ -2,22 +2,30 @@ import TripItemView from '../view/trip-item-view';
 import TripEditView from '../view/trip-edit-view';
 import { render, replace, remove } from '../framework/render';
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING'
+};
+
 export default class PointPresenter {
   #pointsListContainer = null;
   #point = null;
   #destinationsModel = null;
   #offersModel = null;
+  #mode = Mode.DEFAULT;
 
   #pointComponent = null;
   #editComponent = null;
   #handleDataChange = null;
+  #handleModeChange = null;
 
 
-  constructor({ pointsListContainer, destinationsModel, offersModel, onDataChange }) {
+  constructor({ pointsListContainer, destinationsModel, offersModel, onDataChange, onModeChange }) {
     this.#pointsListContainer = pointsListContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#handleDataChange = onDataChange;
+    this.#handleModeChange = onModeChange;
   }
 
   init(point) {
@@ -50,11 +58,11 @@ export default class PointPresenter {
       return;
     }
 
-    if (this.#pointsListContainer.contains(prevPointComponent.element)) {
+    if (this.#mode === Mode.DEFAULT) {
       replace(this.#pointComponent, prevPointComponent);
     }
 
-    if (this.#pointsListContainer.contains(prevEditComponent.element)) {
+    if (this.#mode === Mode.EDITING) {
       replace(this.#pointComponent, prevEditComponent);
     }
 
@@ -62,14 +70,23 @@ export default class PointPresenter {
     remove(prevEditComponent);
   }
 
+  resetView() {
+    if (this.#mode !== Mode.DEFAULT) {
+      this.#replaceFormToPoint();
+    }
+  }
+
   #replacePointToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#onEscKeypress);
+    this.#handleModeChange();
+    this.#mode = Mode.EDITING;
   };
 
   #replaceFormToPoint = () => {
     replace(this.#pointComponent, this.#editComponent);
     document.removeEventListener('keydown', this.#onEscKeypress);
+    this.#mode = Mode.DEFAULT;
   };
 
   #onEscKeypress = (evt) => {
