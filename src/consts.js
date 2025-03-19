@@ -1,4 +1,4 @@
-export const POINT_COUNT = 7;
+export const POINT_COUNT = 2;
 
 export const DATE_FORMAT = 'MMM D';
 export const TIME_FORMAT = 'HH:mm';

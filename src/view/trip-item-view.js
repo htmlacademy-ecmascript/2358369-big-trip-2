@@ -10,10 +10,10 @@ function createTripItemTemplate(point, offers, destination) {
 
   const offersList = offers ? offers.offers : [];
 
-  const createOffersTemplate = (offer) => offer.map(({title, price}) => `<li className="event__offer">
-        <span className="event__offer-title">${title}</span>
+  const createOffersTemplate = (offer) => offer.map(({title, price}) => `<li class="event__offer">
+        <span class="event__offer-title">${title}</span>
         &plus;&euro;&nbsp;
-        <span className="event__offer-price">${price}</span>
+        <span class="event__offer-price">${price}</span>
       </li>`).join('');
 
   return ` <li class="trip-events__item">
@@ -57,16 +57,21 @@ export default class TripItemView extends AbstractView {
   #offers = null;
   #destinations = null;
   #handleEditClick = null;
+  #handleFavoriteClick = null;
 
-  constructor({ point, offers, destinations, onEditClick }) {
+  constructor({ point, offers, destinations, onEditClick, onFavoriteClick }) {
     super();
     this.#point = point;
     this.#offers = offers;
     this.#destinations = destinations;
     this.#handleEditClick = onEditClick;
+    this.#handleFavoriteClick = onFavoriteClick;
 
     this.element.querySelector('.event__rollup-btn')
       .addEventListener('click', this.#editClickHandler);
+
+    this.element.querySelector('.event__favorite-btn')
+      .addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
@@ -81,13 +86,18 @@ export default class TripItemView extends AbstractView {
     return this.element;
   }
 
-  removeElement() {
-    this.element = null;
-  }
+  // removeElement() {
+  //   this.element = null;
+  // }
 
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleEditClick();
+  };
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFavoriteClick();
   };
 }
 
