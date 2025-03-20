@@ -10,7 +10,6 @@ export const mockPoints = [
     isFavorite: false,
     offers: [
       'e4c3e4e6-9053-42ce-b747-e281315baa31',
-      // 'e4c3e4e6-9213-42fe-b7c7-e281315baa32',
       'e4c3e4e6-1223-42ce-b747-f2567315caf51',
     ],
     type: 'taxi'
@@ -24,13 +23,11 @@ export const mockPoints = [
     isFavorite: true,
     offers: [
       'a1b2c3d4-5678-9101-1121-314151617181',
-      // 'a1b2c3d4-5678-9101-1121-314151617182',
-      // 'a1b2c3d4-5678-9101-1121-314151617183',
     ],
     type: 'bus'
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808f',
+    id: 'f4b62099-293f-4c3d-a702-94eec4a2808e',
     basePrice: 1900,
     dateFrom: '2019-07-10T21:45:56.845Z',
     dateTo: '2019-07-11T17:47:13.375Z',
@@ -38,9 +35,6 @@ export const mockPoints = [
     isFavorite: false,
     offers: [
       'd4e5f6g7-8901-2345-6789-012345678901',
-      // 'd4e5f6g7-8901-2345-6789-012345678902',
-      // 'd4e5f6g7-8901-2345-6789-012345678903',
-      // 'd4e5f6g7-8901-2345-6789-012345678904',
       'd4e5f6g7-8901-2345-6789-012345678905',
     ],
     type: 'train'
@@ -54,12 +48,11 @@ export const mockPoints = [
     isFavorite: false,
     offers: [
       'd4e5f6g7-8901-2345-6789-012345678901',
-      // 'd4e5f6g7-8901-2345-6789-012345678904',
     ],
     type: 'train'
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808f',
+    id: 'f4b62099-293f-4c3d-a702-94eec4a2808g',
     basePrice: 1125,
     dateFrom: '2019-07-10T18:37:56.845Z',
     dateTo: '2019-07-11T12:22:19.375Z',
@@ -67,12 +60,11 @@ export const mockPoints = [
     isFavorite: true,
     offers: [
       'd4e5f6g7-8901-2345-6789-012345678902',
-      // 'd4e5f6g7-8901-2345-6789-012345678905',
     ],
     type: 'train'
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808f',
+    id: 'f4b62099-293f-4c3d-a702-94eec4a2808h',
     basePrice: 1415,
     dateFrom: '2019-07-10T21:00:56.845Z',
     dateTo: '2019-07-11T10:02:13.375Z',
@@ -84,7 +76,7 @@ export const mockPoints = [
     type: 'ship'
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808f',
+    id: 'f4b62099-293f-4c3d-a702-94eec4a2808i',
     basePrice: 8000,
     dateFrom: '2019-07-10T20:55:56.845Z',
     dateTo: '2019-07-11T11:07:15.375Z',
@@ -96,19 +88,17 @@ export const mockPoints = [
     type: 'drive'
   },
   {
-    id: 'f4b62099-293f-4c3d-a702-94eec4a2808f',
+    id: 'f4b62099-293f-4c3d-a702-94eec4a2808j',
     basePrice: 9100,
     dateFrom: '2019-07-10T23:45:56.845Z',
     dateTo: '2019-07-11T13:22:15.375Z',
     destination: 'cfe416cq-10xa-ye10-8077-4zk9a01edcab',
     isFavorite: false,
     offers: [
-      // 'b2c3d4e5-6789-0123-4567-890123456789',
-      // 'b2c3d4e5-6789-0123-4567-890123456790',
       'b2c3d4e5-6789-0123-4567-890123456791',
     ],
     type: 'flight'
-  },
+  }
 ];
 
 function getRandomPoints() {
