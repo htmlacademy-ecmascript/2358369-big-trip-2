@@ -7,8 +7,6 @@ function capitalizeWord(word) {
 }
 
 function updatePoint(points, update) {
-  console.log('Обновление списка:', points);
-  console.log('Изменяемая точка:', update);
   return points.map((point) => point.id === update.id ? update : point);
 }
 
