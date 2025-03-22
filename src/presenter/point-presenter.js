@@ -76,6 +76,11 @@ export default class PointPresenter {
     }
   }
 
+  destroy() {
+    remove(this.#pointComponent);
+    remove(this.#editComponent);
+  }
+
   #replacePointToForm = () => {
     replace(this.#editComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#onEscKeypress);
