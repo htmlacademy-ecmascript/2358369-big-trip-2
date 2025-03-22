@@ -76,4 +76,5 @@ export default class BoardPresenter {
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
   }
+
 }
