@@ -1,12 +1,12 @@
-import { filterType } from '../consts';
+import { FilterType } from '../consts';
 import { isEventInPast, isEventInPresent, isEventInFuture } from './date';
 
 
 const filter = {
-  [filterType.EVERYTHING]: (points) => points.slice(),
-  [filterType.PAST]: (points) => points.filter((point) => isEventInPast(point.dateFrom)),
-  [filterType.PRESENT]: (points) => points.filter((point) => isEventInPresent(point.dateFrom)),
-  [filterType.FUTURE]: (points) => points.filter((point) => isEventInFuture(point.dateFrom)),
+  [FilterType.EVERYTHING]: (points) => points.slice(),
+  [FilterType.PAST]: (points) => points.filter((point) => isEventInPast(point.dateFrom)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => isEventInPresent(point.dateFrom)),
+  [FilterType.FUTURE]: (points) => points.filter((point) => isEventInFuture(point.dateFrom)),
 };
 
 export { filter };

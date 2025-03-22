@@ -10,6 +10,10 @@ dayjs.extend(duration);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
+function getDate(date) {
+  return new Date(date);
+}
+
 function humanizePointDate(date) {
   return date ? dayjs(date).format(DATE_FORMAT) : '';
 }
@@ -44,4 +48,4 @@ function isEventInPresent(date) {
   return date && dayjs.utc().isSame(dayjs.utc(), 'day');
 }
 
-export { humanizePointDate, humanizePointTime, getTimeDifference, humanizeDateTime, isEventInPast, isEventInFuture, isEventInPresent };
+export { humanizePointDate, humanizePointTime, getTimeDifference, humanizeDateTime, isEventInPast, isEventInFuture, isEventInPresent, getDate };
