@@ -1,4 +1,4 @@
-export const mockOffers = [
+const MOCK_OFFERS_LIST = [
   {
     type: 'taxi',
     offers: [
@@ -120,3 +120,10 @@ export const mockOffers = [
     ]
   }
 ];
+
+function getMockOffersList () {
+  return MOCK_OFFERS_LIST;
+}
+
+export {getMockOffersList};
+

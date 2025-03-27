@@ -1,29 +1,25 @@
+import { TimeFormat } from '../const';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import { DATE_FORMAT, TIME_FORMAT, DATE_TIME_FORMAT } from '../consts';
 
-dayjs.extend(utc);
-dayjs.extend(duration);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
+dayjs.extend(duration);
+dayjs.extend(utc);
 
-function getDate(date) {
-  return new Date(date);
+function humanizeDate(date) {
+  return date ? dayjs.utc(date).format(TimeFormat.DATE_FORMAT) : '';
 }
 
-function humanizePointDate(date) {
-  return date ? dayjs(date).format(DATE_FORMAT) : '';
-}
-
-function humanizePointTime(time) {
-  return time ? dayjs.utc(time).format(TIME_FORMAT) : '';
+function humanizeTime(time) {
+  return time ? dayjs.utc(time).format(TimeFormat.TIME_FORMAT) : '';
 }
 
 function humanizeDateTime(dateTime) {
-  return dateTime ? dayjs.utc(dateTime).format(DATE_TIME_FORMAT) : '';
+  return dateTime ? dayjs.utc(dateTime).format(TimeFormat.DATE_TIME_FORMAT) : '';
 }
 
 function getTimeDifference(firstDate, secondDate) {
@@ -36,16 +32,24 @@ function getTimeDifference(firstDate, secondDate) {
   return difference.format(format).replace(/\b00D 00H\b/, '').replace(/\b00D\b/, '');
 }
 
-function isEventInPast(date) {
-  return date && dayjs.utc().isAfter(date);
+function isEventInPast(pointDate) {
+  return pointDate && dayjs.utc().isAfter(pointDate);
 }
 
-function isEventInFuture(date) {
-  return date && dayjs.utc().isBefore(date);
+function isEventInFuture(pointDate) {
+  return pointDate && dayjs.utc().isBefore(pointDate);
 }
 
-function isEventInPresent(date) {
-  return date && dayjs.utc().isSame(dayjs.utc(), 'day');
+function isEventSameOrInFuture(pointDate) {
+  return pointDate && dayjs.utc().isSameOrBefore(pointDate);
 }
 
-export { humanizePointDate, humanizePointTime, getTimeDifference, humanizeDateTime, isEventInPast, isEventInFuture, isEventInPresent, getDate };
+function isEventSameOrInPast(pointDate) {
+  return pointDate && dayjs.utc().isSameOrAfter(pointDate);
+}
+
+function getDate(date) {
+  return new Date(date);
+}
+
+export { getDate, isEventSameOrInPast, isEventSameOrInFuture, isEventInFuture, isEventInPast, humanizeDate, getTimeDifference, humanizeDateTime, humanizeTime };

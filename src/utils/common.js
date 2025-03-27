@@ -6,8 +6,8 @@ function capitalizeWord(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-function updatePoint(points, update) {
-  return points.map((point) => point.id === update.id ? update : point);
+function updatePoint(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
 }
 
-export { getRandomArrayElement, capitalizeWord, updatePoint };
+export {getRandomArrayElement, updatePoint, capitalizeWord};
