@@ -4,8 +4,8 @@ const mockPointsList = [
   {
     id: 'f4b62099-293f-4c3d-a702-94eec4a2808c',
     basePrice: 1200,
-    dateFrom: '2019-07-20T22:55:56.845Z',
-    dateTo: '2019-07-22T11:22:13.375Z',
+    dateFrom: '2027-07-20T22:55:56.845Z',
+    dateTo: '2027-07-22T11:22:13.375Z',
     destination: 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
     isFavorite: false,
     offers: [
