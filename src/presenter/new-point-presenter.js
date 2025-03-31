@@ -14,7 +14,6 @@ export default class NewPointPresenter {
     this.#pointListContainer = pointListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
-    console.log('on destroy:', onDestroy)
   }
 
   init(eventsModel) {

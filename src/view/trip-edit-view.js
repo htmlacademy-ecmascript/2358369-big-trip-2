@@ -164,7 +164,6 @@ export default class TripEditView extends AbstractStatefulView {
     this.#handleDeleteClick = onDeleteClick;
 
     this.#newPoint = newPoint;
-    console.log(onDeleteClick)
     this._restoreHandlers();
   }
 

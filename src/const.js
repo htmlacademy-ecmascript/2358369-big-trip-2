@@ -44,7 +44,17 @@ const UserAction = {
 const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
-  MAJOR: 'MAJOR'
+  MAJOR: 'MAJOR',
+  INIT: 'INIT'
 };
 
-export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode };
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+};
+
+const AUTHORIZATION = 'Basic n1k0m0c6or';
+
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+
+export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode, Method, AUTHORIZATION, END_POINT };

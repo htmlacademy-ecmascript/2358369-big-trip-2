@@ -1,5 +1,6 @@
 import TripListView from '../view/trip-list-view.js';
 import SortingView from '../view/sorting-view.js';
+import LoadingView from '../view/loading-view.js';
 import { render, RenderPosition, remove } from '../framework/render.js';
 import NoPointsView from '../view/no-points-view.js';
 import PointPresenter from './point-presenter.js';
@@ -14,6 +15,7 @@ export default class EventsPresenter {
   #filterModel = null;
 
   #listComponent = new TripListView();
+  #loadingComponent = new LoadingView();
   #sortComponent = null;
   #noPointsComponent = null;
 
@@ -22,12 +24,12 @@ export default class EventsPresenter {
   #pointPresenters = new Map();
   #currentSortType = SortType.DAY;
   #newPointPresenter = null;
+  #isLoading = true;
 
   constructor({ eventsContainer, eventsModel, filterModel, onNewPointDestroy }) {
     this.#eventsContainer = eventsContainer;
     this.#eventsModel = eventsModel;
     this.#filterModel = filterModel;
-    console.log('ep on destroy:', onNewPointDestroy)
     this.#newPointPresenter = new NewPointPresenter({
       offers: eventsModel.offers,
       destinations: eventsModel.destinations,
@@ -98,6 +100,11 @@ export default class EventsPresenter {
         this.#clearBoard({ resetSortType: true });
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
     }
   };
 
@@ -118,6 +125,10 @@ export default class EventsPresenter {
     });
 
     render(this.#sortComponent, this.#listComponent.element, RenderPosition.AFTERBEGIN);
+  }
+
+  #renderLoading() {
+    render(this.#loadingComponent, this.#eventsContainer, RenderPosition.AFTERBEGIN);
   }
 
   #renderPoint(point) {
@@ -149,6 +160,7 @@ export default class EventsPresenter {
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
+    remove(this.#loadingComponent);
 
     if (this.#noPointsComponent) {
       remove(this.#noPointsComponent);
@@ -166,6 +178,11 @@ export default class EventsPresenter {
   }
 
   #renderBoard() {
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
+
     this.#offers = this.#eventsModel.offers;
     this.#destinations = this.#eventsModel.destinations;
 
