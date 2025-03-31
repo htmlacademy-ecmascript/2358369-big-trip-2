@@ -47,4 +47,13 @@ const UpdateType = {
   MAJOR: 'MAJOR'
 };
 
-export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode };
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+};
+
+const AUTHORIZATION = 'Basic n1k0m0c6or';
+
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+
+export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode, Method, AUTHORIZATION, END_POINT };

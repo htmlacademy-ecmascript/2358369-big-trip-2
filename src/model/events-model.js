@@ -1,15 +1,23 @@
-import {getRandomPoint} from '../mock/points.js';
-import {getMockDestinationsList} from '../mock/destinations.js';
-import {getMockOffersList} from '../mock/offers.js';
 import Observable from '../framework/observable.js';
 
 
-const POINTS_COUNT = 3;
+// const POINTS_COUNT = 3;
 
 export default class EventsModel extends Observable {
-  #points = Array.from({length: POINTS_COUNT}, getRandomPoint);
-  #destinations = getMockDestinationsList();
-  #offers = getMockOffersList();
+  #points = [];
+  #destinations = [];
+  #offers = [];
+
+  #pointsApiService = null;
+
+  constructor({pointsApiService}) {
+    super();
+    this.#pointsApiService = pointsApiService;
+
+    this.#pointsApiService.points.then((points) => {
+      console.log(points);
+    });
+  }
 
   get points() {
     return this.#points;
