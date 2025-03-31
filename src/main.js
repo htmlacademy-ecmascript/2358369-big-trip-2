@@ -43,8 +43,10 @@ function handleNewPointBtnClick() {
   newPointBtnComponent.element.disabled = true;
 }
 
-render(newPointBtnComponent, headerContainer);
 
 filterPresenter.init();
 eventsPresenter.init();
-
+eventsModel.init()
+  .finally(() => {
+    render(newPointBtnComponent, headerContainer);
+  });

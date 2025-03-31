@@ -1,7 +1,5 @@
 import Observable from '../framework/observable.js';
-
-
-// const POINTS_COUNT = 3;
+import { UpdateType } from '../const.js';
 
 export default class EventsModel extends Observable {
   #points = [];
@@ -13,30 +11,57 @@ export default class EventsModel extends Observable {
   constructor({pointsApiService}) {
     super();
     this.#pointsApiService = pointsApiService;
-
-    this.#pointsApiService.points.then((points) => {
-      console.log(points.map(this.#adaptToClient));
-    });
   }
 
   get points() {
     return this.#points;
   }
 
-  updatePoint(updateType, update) {
+  async init() {
+    try {
+      const points = await this.#pointsApiService.points;
+      this.#points = points.map(this.#adaptToClient);
+    } catch(err) {
+      this.#points = [];
+    }
+
+    try {
+      const offers = await this.#pointsApiService.offers;
+      this.#offers = offers.map(this.#adaptToClient);
+    } catch(err) {
+      this.#offers = [];
+    }
+
+    try {
+      const destinations = await this.#pointsApiService.destinations;
+      this.#destinations = destinations.map(this.#adaptToClient);
+    } catch(err) {
+      this.#destinations = [];
+    }
+
+    this._notify(UpdateType.INIT);
+  }
+
+  async updatePoint(updateType, update) {
     const index = this.#points.findIndex((point) => point.id === update.id);
 
     if (index === -1) {
       throw new Error('Cant\'t update unexisting point');
     }
 
-    this.#points = [
-      ...this.#points.slice(0, index),
-      update,
-      ...this.#points.slice(index + 1),
-    ];
+    try {
+      const response = await this.#pointsApiService.updatePoint(update);
+      const updatedPoint = this.#adaptToClient(response);
 
-    this._notify(updateType, update);
+      this.#points = [
+        ...this.#points.slice(0, index),
+        updatedPoint,
+        ...this.#points.slice(index + 1),
+      ];
+      this._notify(updateType, updatedPoint);
+    } catch (err) {
+      throw new Error('Cant\'t update point');
+    }
   }
 
   addPoint(updateType, update) {
