@@ -8,13 +8,13 @@ const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PRESENT: 'present',
-  PAST: 'past',
+  PAST: 'past'
 };
 
 const SortType = {
   DAY: 'day',
   PRICE: 'price',
-  TIME: 'time',
+  TIME: 'time'
 };
 
 const EVENT_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
@@ -30,4 +30,21 @@ const BLANK_POINT = {
   'type': 'taxi'
 };
 
-export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT };
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
+const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT'
+};
+
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR'
+};
+
+export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode };

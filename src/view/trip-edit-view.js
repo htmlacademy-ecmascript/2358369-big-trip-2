@@ -4,6 +4,7 @@ import { humanizeDateTime } from '../utils/date.js';
 import { EVENT_TYPES, BLANK_POINT } from '../const.js';
 import 'flatpickr/dist/flatpickr.min.css';
 import flatpickr from 'flatpickr';
+import he from 'he';
 
 
 function createOffersEditTemplate(checkedOffers, offersType, allOffers) {
@@ -31,7 +32,7 @@ function createOffersEditTemplate(checkedOffers, offersType, allOffers) {
 }
 
 function createPicturesTemplate(destinationInfo) {
-  const picturesList = destinationInfo.pictures;
+  const picturesList = destinationInfo ? destinationInfo.pictures : [];
 
   return (picturesList.map((picture) =>
     `<img class="event__photo" src="${picture.src}" alt="${picture.description}">`).join(''));
@@ -50,16 +51,17 @@ function createEventTypesTemplate(chosenType) {
   `).join(''));
 }
 
-function createEditNewPointTemplate(point, offers, destinations) {
+function createEditNewPointTemplate(point, offers, destinations, newPoint) {
+
 
   const { dateTo, dateFrom, type, offers: pointOffers, destination: pointDestination, basePrice } = point;
 
-  const selectedDestination = destinations.find((x) => x.id === pointDestination);
+  const selectedDestination = destinations ? destinations.find((x) => x.id === pointDestination) : [];
 
   const editOffersTemplate = createOffersEditTemplate(pointOffers, type, offers);
   const picturesTemplate = createPicturesTemplate(selectedDestination);
 
-  const destinationName = selectedDestination.name;
+  const destinationName = selectedDestination ? selectedDestination.name : '';
 
   const humanizedTimeFrom = humanizeDateTime(dateFrom);
   const humanizedTimeTo = humanizeDateTime(dateTo);
@@ -90,7 +92,7 @@ function createEditNewPointTemplate(point, offers, destinations) {
                     <label class="event__label  event__type-output" for="event-destination-1">
                       ${type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinationName}" data-destination-name="${destinationName}" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destinationName)}" data-destination-name="${destinationName}" list="destination-list-1">
                     <datalist id="destination-list-1">
                     ${optionsListTemplate}
                     </datalist>
@@ -98,10 +100,10 @@ function createEditNewPointTemplate(point, offers, destinations) {
 
                   <div class="event__field-group  event__field-group--time">
                     <label class="visually-hidden" for="event-start-time-1">From</label>
-                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${humanizedTimeFrom}">
+                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${he.encode(humanizedTimeFrom)}">
                     &mdash;
                     <label class="visually-hidden" for="event-end-time-1">To</label>
-                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${humanizedTimeTo}">
+                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${he.encode(humanizedTimeTo)}">
                   </div>
 
                   <div class="event__field-group  event__field-group--price">
@@ -109,14 +111,14 @@ function createEditNewPointTemplate(point, offers, destinations) {
                       <span class="visually-hidden">Price</span>
                       &euro;
                     </label>
-                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+                    <input class="event__input  event__input--price" id="event-price-1" type="number" name="event-price" value="${basePrice}">
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-                  <button class="event__reset-btn" type="reset">Delete</button>
-                  <button class="event__rollup-btn" type="button">
+                  <button class="event__reset-btn" type="reset">${newPoint ? 'Cancel' : 'Delete'}</button>
+                  ${!newPoint ? `<button class="event__rollup-btn" type="button">
                     <span class="visually-hidden">Open event</span>
-                  </button>
+                  </button>` : ''}
                 </header>
                 <section class="event__details">
                 ${offers.find((offer) => offer.type === type).offers.length ? editOffersTemplate : ''}
@@ -143,12 +145,15 @@ export default class TripEditView extends AbstractStatefulView {
 
   #handleFormSubmit = null;
   #handleFormClose = null;
+  #handleDeleteClick = null;
 
   #datepickerFrom = null;
   #datepickerTo = null;
 
+  #newPoint = null;
 
-  constructor({ onFormSubmit, onFormClose, point = BLANK_POINT, offers, destinations }) {
+
+  constructor({ onFormSubmit, onFormClose, onDeleteClick, point = BLANK_POINT, offers, destinations, newPoint }) {
     super();
     this._setState(TripEditView.parsePointToState(point));
     this.#offers = offers;
@@ -156,12 +161,15 @@ export default class TripEditView extends AbstractStatefulView {
 
     this.#handleFormSubmit = onFormSubmit;
     this.#handleFormClose = onFormClose;
+    this.#handleDeleteClick = onDeleteClick;
 
+    this.#newPoint = newPoint;
+    console.log(onDeleteClick)
     this._restoreHandlers();
   }
 
   get template() {
-    return createEditNewPointTemplate(this._state, this.#offers, this.#destinations);
+    return createEditNewPointTemplate(this._state, this.#offers, this.#destinations, this.#newPoint);
   }
 
   removeElement() {
@@ -186,14 +194,20 @@ export default class TripEditView extends AbstractStatefulView {
   _restoreHandlers() {
     this.element.querySelector('form')
       .addEventListener('submit', this.#formSubmitHandler);
-    this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#formCloseHandler);
+
+    if (!this.#newPoint) {
+      this.element.querySelector('.event__rollup-btn')
+        .addEventListener('click', this.#formCloseHandler);
+    }
+
     this.element.querySelector('.event__type-list')
       .addEventListener('change', this.#eventTypeToogleHandler);
     this.element.querySelector('.event__input--destination')
       .addEventListener('change', this.#eventDestinationToogleHandler);
     this.element.querySelector('.event__details')
       .addEventListener('change', this.#eventOffersSelectHandler);
+    this.element.querySelector('.event__reset-btn')
+      .addEventListener('click', this.#eventDeleteClickHandler);
 
     this.#setDatepickers();
   }
@@ -232,9 +246,14 @@ export default class TripEditView extends AbstractStatefulView {
   #eventOffersSelectHandler = (evt) => {
     evt.preventDefault();
     const formData = new FormData(this.element.querySelector('form'));
-    this.updateElement({
+    this._setState({
       offers: formData.getAll('offers')
     });
+  };
+
+  #eventDeleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleDeleteClick(TripEditView.parseStateToPoint(this._state));
   };
 
   #dateFromChangeHandler = () => {
