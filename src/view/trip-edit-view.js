@@ -54,7 +54,7 @@ function createEventTypesTemplate(chosenType) {
 function createEditNewPointTemplate(point, offers, destinations, newPoint) {
 
 
-  const { dateTo, dateFrom, type, offers: pointOffers, destination: pointDestination, basePrice } = point;
+  const { dateTo, dateFrom, type, offers: pointOffers, destination: pointDestination, basePrice, isDeleting, isDisabled, isSaving } = point;
 
   const selectedDestination = destinations ? destinations.find((x) => x.id === pointDestination) : [];
 
@@ -69,6 +69,8 @@ function createEditNewPointTemplate(point, offers, destinations, newPoint) {
   const optionsListTemplate = createOptionsListTemplate(destinations);
 
   const eventTypesTemplate = createEventTypesTemplate(type);
+
+  const datesNotSelected = (dateFrom === null) || (dateTo === null);
 
   return (`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -92,7 +94,7 @@ function createEditNewPointTemplate(point, offers, destinations, newPoint) {
                     <label class="event__label  event__type-output" for="event-destination-1">
                       ${type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destinationName)}" data-destination-name="${destinationName}" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" ${isDisabled ? 'disabled' : ''} value="${he.encode(destinationName)}" data-destination-name="${destinationName}" list="destination-list-1">
                     <datalist id="destination-list-1">
                     ${optionsListTemplate}
                     </datalist>
@@ -100,10 +102,10 @@ function createEditNewPointTemplate(point, offers, destinations, newPoint) {
 
                   <div class="event__field-group  event__field-group--time">
                     <label class="visually-hidden" for="event-start-time-1">From</label>
-                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${he.encode(humanizedTimeFrom)}">
+                    <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" ${isDisabled ? 'disabled' : ''} value="${he.encode(humanizedTimeFrom)}">
                     &mdash;
                     <label class="visually-hidden" for="event-end-time-1">To</label>
-                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${he.encode(humanizedTimeTo)}">
+                    <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" ${isDisabled ? 'disabled' : ''} value="${he.encode(humanizedTimeTo)}">
                   </div>
 
                   <div class="event__field-group  event__field-group--price">
@@ -111,11 +113,11 @@ function createEditNewPointTemplate(point, offers, destinations, newPoint) {
                       <span class="visually-hidden">Price</span>
                       &euro;
                     </label>
-                    <input class="event__input  event__input--price" id="event-price-1" type="number" name="event-price" value="${basePrice}">
+                    <input class="event__input  event__input--price" id="event-price-1" type="number" name="event-price" ${isDisabled ? 'disabled' : ''} value="${basePrice}">
                   </div>
 
-                  <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-                  <button class="event__reset-btn" type="reset">${newPoint ? 'Cancel' : 'Delete'}</button>
+                  <button class="event__save-btn  btn  btn--blue" type="submit" ${datesNotSelected || isDisabled ? 'disabled' : ''} >${isSaving ? 'saving...' : 'save'}</button>
+                  <button class="event__reset-btn" type="reset">${(newPoint ? 'Cancel' : null) || (isDeleting ? 'deleting...' : 'delete')}</button>
                   ${!newPoint ? `<button class="event__rollup-btn" type="button">
                     <span class="visually-hidden">Open event</span>
                   </button>` : ''}
@@ -207,9 +209,18 @@ export default class TripEditView extends AbstractStatefulView {
       .addEventListener('change', this.#eventOffersSelectHandler);
     this.element.querySelector('.event__reset-btn')
       .addEventListener('click', this.#eventDeleteClickHandler);
+    this.element.querySelector('.event__input--price')
+      .addEventListener('input', this.#priceInputHandler);
 
     this.#setDatepickers();
   }
+
+  #priceInputHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      basePrice: parseInt(evt.target.value, 10),
+    });
+  };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
@@ -255,18 +266,18 @@ export default class TripEditView extends AbstractStatefulView {
     this.#handleDeleteClick(TripEditView.parseStateToPoint(this._state));
   };
 
-  #dateFromChangeHandler = () => {
-    this._setState({
-      dateFrom: this.element.querySelector('.flatpickr-input[name="event-start-time"]').value,
+  #dateFromChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateFrom: userDate,
     });
-    this.#datepickerTo.set('minDate',this.element.querySelector('.flatpickr-input[name="event-start-time"]').value);
+    this.#datepickerTo.set('minDate', userDate);
   };
 
-  #dateToChangeHandler = () => {
-    this._setState({
-      dateTo: this.element.querySelector('.flatpickr-input[name="event-end-time"]').value,
+  #dateToChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateTo: userDate,
     });
-    this.#datepickerFrom.set('maxDate',this.element.querySelector('.flatpickr-input[name="event-end-time"]').value);
+    this.#datepickerFrom.set('maxDate', userDate);
   };
 
   #setDatepickers() {
@@ -302,11 +313,20 @@ export default class TripEditView extends AbstractStatefulView {
   static parsePointToState(point) {
     return {
       ...point,
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
     };
   }
 
   static parseStateToPoint(state) {
     const point = { ...state };
+
+
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
     return point;
   }
 
