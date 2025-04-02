@@ -1,6 +1,7 @@
 import { render } from './framework/render.js';
 import EventsPresenter from './presenter/events-presenter.js';
 import FilterPresenter from './presenter/filter-presenter.js';
+import TripInfoPresenter from './presenter/trip-info-presenter.js';
 import EventsModel from './model/events-model.js';
 import FilterModel from './model/filter-model.js';
 import NewPointBtnView from './view/new-point-btn-view.js';
@@ -30,6 +31,11 @@ const eventsPresenter = new EventsPresenter({
   onNewPointDestroy: handleNewPointFormClose
 });
 
+const tripInfoPresenter = new TripInfoPresenter({
+  tripInfoContainer: headerContainer,
+  eventsModel
+});
+
 const newPointBtnComponent = new NewPointBtnView({
   onClick: handleNewPointBtnClick
 });
@@ -46,6 +52,7 @@ function handleNewPointBtnClick() {
 
 filterPresenter.init();
 eventsPresenter.init();
+tripInfoPresenter.init();
 eventsModel.init()
   .finally(() => {
     render(newPointBtnComponent, headerContainer);

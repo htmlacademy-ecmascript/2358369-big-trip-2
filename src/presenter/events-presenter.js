@@ -235,6 +235,5 @@ export default class EventsPresenter {
       this.#renderNoPoints();
       return;
     }
-
   }
 }
