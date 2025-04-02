@@ -20,14 +20,13 @@ const SortType = {
 const EVENT_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 const BLANK_POINT = {
-  'id': '007',
   'basePrice': 0,
   'dateFrom': null,
   'dateTo': null,
   'destination': null,
   'isFavorite': false,
   'offers': [],
-  'type': 'taxi'
+  'type': 'flight'
 };
 
 const Mode = {
@@ -45,16 +44,24 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
-  INIT: 'INIT'
+  INIT: 'INIT',
+  FAILURE: 'FAILURE'
 };
 
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
 };
 
 const AUTHORIZATION = 'Basic n1k0m0c6or';
 
-const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
+const END_POINT = 'https://23.objects.htmlacademy.pro/big-trip';
 
-export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode, Method, AUTHORIZATION, END_POINT };
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+export { TimeFormat, FilterType, SortType, EVENT_TYPES, BLANK_POINT, UserAction, UpdateType, Mode, Method, AUTHORIZATION, END_POINT, TimeLimit };
