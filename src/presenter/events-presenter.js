@@ -39,12 +39,13 @@ export default class EventsPresenter {
     this.#eventsContainer = eventsContainer;
     this.#eventsModel = eventsModel;
     this.#filterModel = filterModel;
+
     this.#newPointPresenter = new NewPointPresenter({
       offers: eventsModel.offers,
       destinations: eventsModel.destinations,
       pointListContainer: this.#listComponent.element,
       onDataChange: this.#handleViewAction,
-      onDestroy: onNewPointDestroy,
+      onDestroy: this.#handleDestroy.bind(this, onNewPointDestroy)
     });
 
     this.#eventsModel.addObserver(this.#handleModelEvent);
@@ -75,6 +76,10 @@ export default class EventsPresenter {
     this.#currentSortType = SortType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#newPointPresenter.init(this.#eventsModel);
+
+    if (this.#noPointsComponent) {
+      remove(this.#noPointsComponent);
+    }
   }
 
   #handleModeChange = () => {
@@ -133,7 +138,7 @@ export default class EventsPresenter {
         remove(this.#loadingComponent);
         this.#renderBoard();
         break;
-      case UpdateType.FAILURE:
+      case UpdateType.ERROR:
         this.#isLoading = false;
         this.#isFailedToLoad = true;
         remove(this.#loadingComponent);
@@ -185,7 +190,7 @@ export default class EventsPresenter {
       filterType: this.#filterModel.filter
     });
 
-    render(this.#noPointsComponent, this.#eventsContainer, RenderPosition.AFTERBEGIN);
+    render(this.#noPointsComponent, this.#eventsContainer, RenderPosition.BEFOREEND);
   }
 
   #renderFailedLoad() {
@@ -233,7 +238,13 @@ export default class EventsPresenter {
 
     if (this.points.length === 0) {
       this.#renderNoPoints();
-      return;
     }
   }
+
+  #handleDestroy = (callback) => {
+    callback();
+    if (this.points.length === 0) {
+      this.#renderNoPoints();
+    }
+  };
 }

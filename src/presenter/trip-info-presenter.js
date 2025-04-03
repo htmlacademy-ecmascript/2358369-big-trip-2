@@ -1,5 +1,5 @@
 import TripInfoView from '../view/trip-info-view';
-import { render, RenderPosition } from '../framework/render';
+import { render, RenderPosition, replace, remove } from '../framework/render';
 
 
 export default class TripInfoPresenter {
@@ -10,11 +10,24 @@ export default class TripInfoPresenter {
   constructor({ tripInfoContainer, eventsModel }) {
     this.#tripInfoContainer = tripInfoContainer;
     this.#eventsModel = eventsModel;
+
+    this.#eventsModel.addObserver(this.#handleUpdate);
   }
 
   init() {
+    const currentInfoComponent = this.#tripInfoComponent;
+
     this.#tripInfoComponent = new TripInfoView(this.#eventsModel);
 
-    render(this.#tripInfoComponent, this.#tripInfoContainer, RenderPosition.AFTERBEGIN);
+    if (currentInfoComponent === null) {
+      render(this.#tripInfoComponent, this.#tripInfoContainer, RenderPosition.AFTERBEGIN);
+      return;
+    }
+    replace(this.#tripInfoComponent, currentInfoComponent);
+    remove(currentInfoComponent);
   }
+
+  #handleUpdate = () => {
+    this.init();
+  };
 }
