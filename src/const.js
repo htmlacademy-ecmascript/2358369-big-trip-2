@@ -57,7 +57,7 @@ const Method = {
 
 const AUTHORIZATION = 'Basic n1k0m0c6or';
 
-const END_POINT = 'https://23.objects.htmlacademy.pro/big-trip';
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
 
 const TimeLimit = {
   LOWER_LIMIT: 350,
