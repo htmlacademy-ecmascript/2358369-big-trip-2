@@ -1,5 +1,5 @@
 import { render } from './framework/render.js';
-import EventsPresenter from './presenter/events-presenter.js';
+import BoardPresenter from './presenter/board-presenter.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import EventsModel from './model/events-model.js';
 import FilterModel from './model/filter-model.js';
@@ -23,7 +23,7 @@ const filterPresenter = new FilterPresenter({
   eventsModel,
 });
 
-const eventsPresenter = new EventsPresenter({
+const boardPresenter = new BoardPresenter({
   eventsContainer: tripEventsContainer,
   eventsModel,
   filterModel,
@@ -39,13 +39,18 @@ function handleNewPointFormClose() {
 }
 
 function handleNewPointBtnClick() {
-  eventsPresenter.createPoint();
+  boardPresenter.createPoint();
   newPointBtnComponent.element.disabled = true;
 }
 
 
 filterPresenter.init();
+<<<<<<< Updated upstream
 eventsPresenter.init();
+=======
+boardPresenter.init();
+tripInfoPresenter.init();
+>>>>>>> Stashed changes
 eventsModel.init()
   .finally(() => {
     render(newPointBtnComponent, headerContainer);
