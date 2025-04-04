@@ -23,7 +23,7 @@ export default class EventsModel extends Observable {
       this.#points = points.map(this.#adaptToClient);
     } catch(err) {
       this.#points = [];
-      this._notify(UpdateType.FAILURE);
+      this._notify(UpdateType.ERROR);
       return;
     }
 
@@ -32,7 +32,7 @@ export default class EventsModel extends Observable {
       this.#offers = offers.map(this.#adaptToClient);
     } catch(err) {
       this.#offers = [];
-      this._notify(UpdateType.FAILURE);
+      this._notify(UpdateType.ERROR);
       return;
     }
 
@@ -41,7 +41,7 @@ export default class EventsModel extends Observable {
       this.#destinations = destinations.map(this.#adaptToClient);
     } catch(err) {
       this.#destinations = [];
-      this._notify(UpdateType.FAILURE);
+      this._notify(UpdateType.ERROR);
       return;
     }
 

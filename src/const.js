@@ -45,7 +45,7 @@ const UpdateType = {
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
   INIT: 'INIT',
-  FAILURE: 'FAILURE'
+  ERROR: 'ERROR'
 };
 
 const Method = {
