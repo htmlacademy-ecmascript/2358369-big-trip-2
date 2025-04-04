@@ -12,7 +12,7 @@ import NewPointPresenter from './new-point-presenter.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 
 
-export default class EventsPresenter {
+export default class BoardPresenter {
   #eventsContainer = null;
   #eventsModel = null;
   #filterModel = null;
