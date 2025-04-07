@@ -56,4 +56,8 @@ tripInfoPresenter.init();
 eventsModel.init()
   .finally(() => {
     render(newPointBtnComponent, headerContainer);
+
+    if (!eventsModel.isDataLoaded) {
+      newPointBtnComponent.element.disabled = true;
+    }
   });

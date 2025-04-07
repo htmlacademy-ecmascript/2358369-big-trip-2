@@ -5,6 +5,7 @@ export default class EventsModel extends Observable {
   #points = [];
   #destinations = [];
   #offers = [];
+  #isDataLoaded = false;
 
   #pointsApiService = null;
 
@@ -17,6 +18,10 @@ export default class EventsModel extends Observable {
     return this.#points;
   }
 
+  get isDataLoaded() {
+    return this.#isDataLoaded;
+  }
+
   async init() {
     try {
       const points = await this.#pointsApiService.points;
@@ -24,6 +29,7 @@ export default class EventsModel extends Observable {
     } catch(err) {
       this.#points = [];
       this._notify(UpdateType.ERROR);
+      this.#isDataLoaded = false;
       return;
     }
 
@@ -33,6 +39,7 @@ export default class EventsModel extends Observable {
     } catch(err) {
       this.#offers = [];
       this._notify(UpdateType.ERROR);
+      this.#isDataLoaded = false;
       return;
     }
 
@@ -42,9 +49,11 @@ export default class EventsModel extends Observable {
     } catch(err) {
       this.#destinations = [];
       this._notify(UpdateType.ERROR);
+      this.#isDataLoaded = false;
       return;
     }
 
+    this.#isDataLoaded = true;
     this._notify(UpdateType.INIT);
   }
 
