@@ -38,8 +38,8 @@ function createPicturesTemplate(destinationInfo) {
     `<img class="event__photo" src="${picture.src}" alt="${picture.description}">`).join(''));
 }
 
-function createOptionsListTemplate(destinationInfo) {
-  return (destinationInfo.map((destination) => `<option value="${destination.name}"></option>`).join(''));
+function createOptionsListTemplate(destinations) {
+  return (destinations.map((destination) => `<option value="${destination.name}"></option>`).join(''));
 }
 
 function createEventTypesTemplate(chosenType) {
